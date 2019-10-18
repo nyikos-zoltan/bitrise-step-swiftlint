@@ -19,4 +19,8 @@ fi
 
 cd "${linting_path}"
 
-swiftlint lint --reporter "${reporter}" ${FLAGS}
+test_run_dir="$BITRISE_TEST_RESULT_DIR/swiftlint"
+mkdir "$test_run_dir"
+
+swiftlint lint --reporter checkstyle --quiet > "$test_run_dir/checkstyle.xml"
+echo '{"test-name":"swiftlint"}' >> "$test_run_dir/test-info.json"
